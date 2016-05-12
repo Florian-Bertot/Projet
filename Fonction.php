@@ -24,7 +24,9 @@
 				$_SESSION['Email'] = $_donnees['Email'];
 				$_SESSION['site'] = 'SHLML';
 				$_error = 'Connexion reussie';
-
+				$_sql_ul = "UPDATE membres SET Last_Connection = now() WHERE Email = '".$_user."'";
+				mysqli_query($_bdd, $_sql_ul);
+				mysqli_close($_bdd);
 			} else {
 				$_error = 'Mot de passe incorrect';
 			}
@@ -90,6 +92,43 @@
 		} else {
 			echo '<p class="lead"> Mot de passe incorect !<br/> Veuillez reessayer.</p>';
 		}
+	}
+
+	function reinitialisation_password($_user, $_password){
+		$_mail = 	"Bonjour, \r\n
+					\r\n
+				   	Vous recevez ce mail suite à votre demande de réinitialisation \r\n
+				   	de mot de passe. \r\n
+				   	\r\n
+				   	Votre nouveau mot de passe est : ".$_password." \r\n
+				   	Veuillez vous rendre sur le site afin de modifier votre mot de passe. \r\n
+				   	\r\n
+				   	Bien cordialement \r\n
+				   	L'équipe SHLML\r\n
+				   	\r\n
+				   	__________________________________________\r\n
+				   	\r\n
+				   	Ce mail a été envoyé automatiquement depuis\r\n
+				   	l'adresse webmaster@shlml.com. Cette adresse n'est pas \r\n
+				   	utilisée à des fins de contact. \r\n
+				   	Si vous souhaitez nous contacter, veuillez utiliser \r\n
+				   	la section contact du site. \r\n
+				   	";
+		$_header = "'From : webmaster@shlml.com'";
+		$_title = "Reinitialisation de votre mot de passe";
+		if (mail($_user, $_title, $_mail, $_header)){
+			/*$_bdd = requete_bdd();
+			$_sql = "UPDATE membres SET Password = '" .$_password. "' WHERE Email = '" .$_user. "'";
+			mysqli_query($_bdd, $_sql);
+			mysqli_close($_bdd);
+			echo 'Votre mot de passe à été envoyé à l\'adresse suivante : '.$_POST["user"].'<br/>';*/
+		} else {
+			echo 'Echec de la réinitialisation. Veuillez réessayer.';
+		}
+		
+
+
+
 	}
 
 	function informations_compte($_user){
@@ -220,7 +259,7 @@
 				mysqli_close($_bdd);	
 			}
 		}	
-	//echo '<meta http-equiv="refresh" content="0;URL=Structure.php?page=transcription">';
+	echo '<meta http-equiv="refresh" content="0;URL=Structure.php?page=transcription">';
 
 	}
 
@@ -281,7 +320,11 @@
 			mysqli_query($_bdd, $_sql_ul_t);
 
 			//On insère les résultats dans la base de données pour le membre
-			$_sql_ul = "INSERT INTO results(ID_Membre, ID_Document, Cote1, Cote2, Cote3, Auteurs, Titre, Lieu, Commentaires, Format) VALUES ('" . $_donnees_m['ID_Membre'] . "','" . $_donnees_d['ID_Document'] . "','" . $_c1 . "','" . $_c2 . "','" . $_c3 . "','" . $_auteurs . "','" . $_titre . "','" . $_lieu . "','" . $_comments . "','" . $_format . "')";
+			if ($_c1 == '?' or $_c2 == '?' or $_c3 == '?' or $_titre == '?' or $_auteurs == '?' or $_lieu == '?' or $_comments == '?' or $_format == '?'){
+				$_sql_ul = "INSERT INTO results(ID_Membre, ID_Document,Trans_Illisible, Cote1, Cote2, Cote3, Auteurs, Titre, Lieu, Commentaires, Format) VALUES ('" . $_donnees_m['ID_Membre'] . "','" . $_donnees_d['ID_Document'] . "',1,'" . $_c1 . "','" . $_c2 . "','" . $_c3 . "','" . $_auteurs . "','" . $_titre . "','" . $_lieu . "','" . $_comments . "','" . $_format . "')";
+			} else {
+				$_sql_ul = "INSERT INTO results(ID_Membre, ID_Document, Cote1, Cote2, Cote3, Auteurs, Titre, Lieu, Commentaires, Format) VALUES ('" . $_donnees_m['ID_Membre'] . "','" . $_donnees_d['ID_Document'] . "','" . $_c1 . "','" . $_c2 . "','" . $_c3 . "','" . $_auteurs . "','" . $_titre . "','" . $_lieu . "','" . $_comments . "','" . $_format . "')";
+			}
 			mysqli_query($_bdd, $_sql_ul);
 			mysqli_close($_bdd);
 			$_done = true;
@@ -304,39 +347,61 @@
 		$_sql_dl_d = "SELECT C1_Rep, C2_Rep, C3_Rep, Titre_Rep, Auteurs_Rep, Lieu_Rep, Comments_Rep, Format_Rep FROM documents WHERE ID_Document = '" . $_idDocument ."'";
 		$_resultat_d = mysqli_query($_bdd, $_sql_dl_d);
 		$_donnees_d = mysqli_fetch_assoc($_resultat_d);
-
 		if ($_donnees_d['C2_Rep'] != "''"){
 			if ($_donnees_d['C1_Rep'] == $_c1 and $_donnees_d['C2_Rep'] == $_c2 and $_donnees_d['C3_Rep'] == $_c3 and $_donnees_d['Titre_Rep'] == $_titre and $_donnees_d['Auteurs_Rep'] == $_auteurs and $_donnees_d['Lieu_Rep'] == $_lieu and $_donnees_d['Comments_Rep'] == $_comments and $_donnees_d['Format_Rep'] == $_format){
-				$_sql_ul_m = "UPDATE membre SET Points = Points+1 WHERE ID_Membre = '" . $_idMembre . "'";
+				$_sql_ul_m = "UPDATE membre SET Trans_Valid = Trans_Valid+1 WHERE ID_Membre = '" . $_idMembre . "'";
 				mysqli_query($_bdd, $_sql_ul_m);
 				mysqli_close($_bdd);
+			} else {
+				$_sql_ul_m = "UPDATE results SET Trans_Echec = 1 WHERE ID_Document = '". $_idDocument ."' and ID_Membre ='" . $_idMembre . "'";
 			}
+			mysqli_query($_bdd, $_sql_ul_m);
+			mysqli_close($_bdd);
 		} else {
-			$_sql_dl_r = "SELECT ID_Membre, Cote1, Cote2, Cote3, Titre, Auteurs, Lieu, Commentaires, Format FROM results WHERE ID_Document = '" . $_idDocument . "'";
+			$_sql_dl_r = "SELECT ID_Membre, Trans_Date, Cote1, Cote2, Cote3, Titre, Auteurs, Lieu, Commentaires, Format FROM results WHERE ID_Document = '" . $_idDocument . "'";
 			$_resultat_r = mysqli_query($_bdd, $_sql_dl_r);
 			$_idUser2 = 0;
+			$_timeStamp2 = time();
 			$_idUser3 = 0;
+			$_timeStamp3 = time();
 			while ($_donnees_r = mysqli_fetch_assoc($_resultat_r)){
 				if ($_donnees_r['Cote1'] == $_c1 and $_donnees_r['Cote2'] == $_c2 and $_donnees_r['Cote3'] == $_c3 and $_donnees_r['Titre'] == $_titre and $_donnees_r['Auteurs'] == $_auteurs and $_donnees_r['Lieu'] == $_lieu and $_donnees_r['Commentaires'] == $_comments and $_donnees_r['Format'] == $_format){
 					if ($_idUser2 == 0){
 						$_idUser2 = $_donnees_r['ID_Membre'];
+						$_timeStamp2 = $_donnees_r['Trans_Date'];
 					} elseif($_idUser3 == 0){
 						$_idUser3 = $_donnees_r['ID_Membre'];
+						$_timeStamp3 = $_donnees_r['Trans_Date'];
 					}
 				}
 			}
 
 			if ($_idUser2 != 0 and $_idUser3 !=0){
 				$_sql_ul_d = "UPDATE documents SET C1_Rep = '" .$_c1."', C2_Rep = '" .$_c2."', C3_Rep = '" .$_c3."', Titre_Rep = '" .$_titre."', Auteurs_Rep = '" .$_auteurs."', Lieu_Rep = '" .$_lieu."', Comments_Rep = '" .$_comments."', Format_Rep = '" .$_format."' WHERE ID_Document = '".$_idDocument."' ";
-				$_sql_ul_m = "UPDATE membres SET Points = Points +1 WHERE ID_Membre = '".$_idMembre."' or ID_Membre = '" .$_idUser2. "' or ID_Membre = '" .$_idUser3. "'";
+				$_sql_ul_m = "UPDATE membres SET Trans_Valid = Trans_Valid +1 WHERE ID_Membre = '".$_idMembre."' or ID_Membre = '" .$_idUser2. "' or ID_Membre = '" .$_idUser3. "'";
+				$_sql_ul_r = "UPDATE results SET Trans_Echec = 1 WHERE ID_Document = '". $_idDocument ."' AND NOT(ID_Membre = '".$_idMembre."' or ID_Membre = '" .$_idUser2. "' or ID_Membre = '" .$_idUser3. "')";
+				if ($_timeStamp2>$_timeStamp3){
+					$_sql_ul_m_2 = "UPDATE membres SET Point_Premier = Point_Premier +1 WHERE ID_Membre = '" .$_idUser3. "'";
+				} else {
+					$_sql_ul_m_2 = "UPDATE membres SET Point_Premier = Point_Premier +1 WHERE ID_Membre = '" .$_idUser2. "'";
+				}
+
 				mysqli_query($_bdd, $_sql_ul_d);
 				mysqli_query($_bdd, $_sql_ul_m);
+				mysqli_query($_bdd, $_sql_ul_r);
+				mysqli_query($_bdd, $_sql_ul_m_2);
 				mysqli_close($_bdd);
 			}
 		}
 
 
 	}
+
+
+
+
+
+
 
 	//Fonction pour initialiser la BDD de fiches
 /*	function fiches($_lettre, $_compteur){

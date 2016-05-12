@@ -14,19 +14,19 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="old_password">Ancien mot de passe :</label>
 					<div class="col-sm-10">
-						<input type = "password" name = "old_password" id = "old_password" maxlength=32>
+						<input type = "password" name = "old_password" id = "old_password" maxlength=32 required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="new_password">Nouveau mot de passe :</label>
 					<div class="col-sm-10">
-						<input type = "password" name = "new_password" id = "new_password" maxlength=32>
+						<input type = "password" name = "new_password" id = "new_password" maxlength=32 required>
 					</div>
 				</div>				
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="new_password_bis">Confirmer le nouveau mot de passe :</label>
 					<div class="col-sm-10">
-						<input type = "password" name = "new_password_bis" id = "new_password_bis" maxlength=32>
+						<input type = "password" name = "new_password_bis" id = "new_password_bis" maxlength=32 required>
 					</div>
 				</div>
 				<div class="form-group"> 

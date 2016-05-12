@@ -10,13 +10,13 @@ if (!(isset($_SESSION['site']) and $_SESSION['site'] == 'SHLML')){
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="user">Utilisateur :</label>
 				<div class="col-sm-10">
-					<input type = "text" name = "user" id = "user" maxlength=64 minlength=4>
+					<input type = "text" name = "user" id = "user" maxlength=64 required>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="password">Mot de passe :</label>
 				<div class="col-sm-10"> 
-					<input type="password" name = "password" id ="password" maxlength=32 minlength=6>
+					<input type="password" name = "password" id ="password" maxlength=32 required>
 				</div>
 			</div>
 			
@@ -26,6 +26,11 @@ if (!(isset($_SESSION['site']) and $_SESSION['site'] == 'SHLML')){
 				</div>
 			</div>
 		</form></p>
+		<p class = "lead">
+			Mot de passe oublié ? 
+			<a href="structure.php?page=password">Cliquez ici</a>.
+		</p>
+
 		<p class = "lead">
 			<a href="structure.php?page=inscription">Pas encore inscrit ?</a>
 		</p>

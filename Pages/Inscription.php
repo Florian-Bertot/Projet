@@ -19,25 +19,25 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="nom">Nom :</label>
 					<div class="col-sm-10">
-						<input type = "text" name = "nom" id = "nom" maxlength=32>
+						<input type = "text" name = "nom" id = "nom" maxlength=32 required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="prenom">Prenom :</label>
 					<div class="col-sm-10">
-						<input type = "text" name = "prenom" id = "prenom" maxlength=32>
+						<input type = "text" name = "prenom" id = "prenom" maxlength=32 required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="email">Email :</label>
 					<div class="col-sm-10">
-						<input type = "email" name = "email" id = "email" maxlength=64>
+						<input type = "email" name = "email" id = "email" maxlength=64 required>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="password">Mot de passe :</label>
 					<div class="col-sm-10"> 
-						<input type="password" name = "password" id ="password" maxlength=32>
+						<input type="password" name = "password" id ="password" maxlength=32 required>
 					</div>
 				</div>
 				<div class="form-group"> 
@@ -52,7 +52,7 @@
 	<?php } 
 
 
-	if (isset ($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['email']) and isset($_POST['password'])){
+	if (isset($_POST['nom']) and isset($_POST['prenom']) and isset($_POST['email']) and isset($_POST['password'])){
 		if (strpos($_POST['email'],"@")==false) {
 			echo '<p class="lead">L\'inscription n\'a pas pu s\'effectuer. <br/>Veuillez renseigner une adresse mail avec un format correct.</p>';
 		} elseif (recherche_mail($_POST['email'])){

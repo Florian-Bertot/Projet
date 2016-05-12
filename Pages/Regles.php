@@ -28,7 +28,7 @@
 	</p>
 
 
-	<h2>Quelques conventions d'écriture</h2>
+	<h2>Quelques conventions d'écriture</h2><br/>
 
 	<p class="lead">
 		Afin de pouvoir obtenir un contenu correct, voici quelques conventions pour transcrire les fiches :<br/>
@@ -40,15 +40,27 @@
 			<li><p class="lead">Si un champ est illisible ou n'existe pas, le remplir avec un °</p></li>
 			<li><p class="lead">Si il y a plusieurs auteurs, les séparer par un ; </p></li>
 
-		</p></ul>
-		<br/><br/>
+		</ul></p>
 
+	<h2>Attribution des points</h2><br/>
 
-
-
+	<p class="lead">
+		Les règles d'attribution des points sont simple :<br/>
+		<ul>
+			<li><p class="lead">Lorsque suffisament de bonne transcriptions ont été effctuées, chaque joueur l'ayant réalisé se voit accorder 1 point</p></li>
+			<li><p class="lead">Le premier joueur à valider la transcription d'une fiche se voit accorder 1 point supplémentaire</p></li>
+		</ul>
 
 
 	</p>
+
+
+
+
+
+		<br/><br/>
+
+	
 
   	
   	<?php

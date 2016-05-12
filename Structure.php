@@ -74,8 +74,10 @@
 					                <li><a href="?page=gestion_compte_id"><b>Modifier son adresse mail</b></a></li>
 					                <li><a href="?page=gestion_compte_pw"><b>Modifier son mot de passe</b></a></li>
 					                <li><a href="?page=gestion_pic"><b>Modifier sa photo de profil</b></a></li>
+					                <li><a href="?page=succes"><b>Afficher les succès</b></a></li>
 					              </ul>
 					            </li>';
+
 							echo '<li><a href="?page=deconnexion"><b>Déconnexion</b></a></li>';
 
 

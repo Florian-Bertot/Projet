@@ -41,6 +41,12 @@ function contenu($_page) {
 	} elseif ($_page=='admin'){
 		include("Pages/Admin.php");
 
+	} elseif ($_page=='password'){
+		include("Pages/Password.php");
+
+	} elseif ($_page=='succes'){
+		include("Pages/Succes.php");
+
 	} else {
 		echo '<br/><h1>Désolé,</h1><p class="lead">Nous ne trouvons pas la page demandée.<br/> <a href="structure.php?page=accueil">Retour à l\'acceuil</a></p>';
 	}

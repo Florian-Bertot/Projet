@@ -14,25 +14,25 @@
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="old_id">Ancienne adresse mail :</label>
 						<div class="col-sm-10">
-							<input type = "email" name = "old_id" id = "old_id" maxlength=64>
+							<input type = "email" name = "old_id" id = "old_id" maxlength=64 required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="password">Mot de passe :</label>
 						<div class="col-sm-10">
-							<input type = "password" name = "password" id = "password" maxlength=32>
+							<input type = "password" name = "password" id = "password" maxlength=32 required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="new_id">Nouvelle adresse mail :</label>
 						<div class="col-sm-10">
-							<input type = "email" name = "new_id" id = "new_id" maxlength=64>
+							<input type = "email" name = "new_id" id = "new_id" maxlength=64 required>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-2" for="new_id_bis">Répéter l'adresse mail : </label>
 						<div class="col-sm-10"> 
-							<input type="email" name = "new_id_bis" id ="new_id_bis" maxlength=64>
+							<input type="email" name = "new_id_bis" id ="new_id_bis" maxlength=64 required>
 						</div>
 					</div>
 					<div class="form-group"> 
