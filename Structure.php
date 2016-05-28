@@ -58,7 +58,12 @@
 				<div id="navbar" class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="?page=accueil"><b>Accueil</b></a></li>
-						<li><a href="?page=transcription"><b>Transcription</b></a></li>
+						<?php 
+						if (isset($_SESSION['Email']) and check_admin($_SESSION['Email'])){
+							echo '<li><a href="?page=transcription_admin"><b>Transcription</b></a></li>';
+						} else {
+							echo '<li><a href="?page=transcription"><b>Transcription</b></a></li>';
+						}?>
 
 					</ul>
 					<ul class="nav navbar-nav navbar-right">

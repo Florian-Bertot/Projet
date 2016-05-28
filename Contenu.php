@@ -39,13 +39,16 @@ function contenu($_page) {
 		include("Pages/Compte/gestion_pic.php");
 
 	} elseif ($_page=='admin'){
-		include("Pages/Admin.php");
+		include("Pages/Admin/Admin.php");
 
 	} elseif ($_page=='password'){
 		include("Pages/Password.php");
 
 	} elseif ($_page=='succes'){
 		include("Pages/Succes.php");
+
+	} elseif ($_page=='transcription_admin'){
+		include("Pages/Admin/Transcription_Admin.php");
 
 	} else {
 		echo '<br/><h1>Désolé,</h1><p class="lead">Nous ne trouvons pas la page demandée.<br/> <a href="structure.php?page=accueil">Retour à l\'acceuil</a></p>';
